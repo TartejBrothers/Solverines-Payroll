@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .forms import add_data
 from .models import Values
 
-
 def home(request):
     form = add_data(request.POST or None)
     if form.is_valid():
@@ -14,7 +13,6 @@ def home(request):
 
 def search(request):
     return render(request, "search.html")
-
 
 def payroll(request):
     query = request.GET.get("query")

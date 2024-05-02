@@ -18,7 +18,7 @@
     <title>Payroll</title>
   </head>
   <body>
-    <div class="main">
+    <div class="main" id="main">
       <div class="header">
         <div class="headercenter">
           <h3>Salary Payslip</h3>
@@ -37,26 +37,26 @@
           <ul>
             {% for value in results %}
             <li>
-              <p>Employee ID : {{ value.id }}</p>
-              <p>Department : {{ value.dept }}</p>
-              <p>Email : {{ value.email }}</p>
-              <p>Designation : {{ value.designation }}</p>
-              <p>Gender : {{ value.gender }}</p>
-              <p>Pan : {{ value.pan_no }}</p>
-              <p>PF // Pension No : HIL EPF Trust-GN/GGN/5572/415840</p>
-              <p>UAN No : {{ value.uan_no }}</p>
+              <p><b>Employee ID</b> : {{ value.id }}</p>
+              <p><b>Department</b> : {{ value.dept }}</p>
+              <p><b>Email</b> : {{ value.email }}</p>
+              <p><b>Designation</b> : {{ value.designation }}</p>
+              <p><b>Gender</b> : {{ value.gender }}</p>
+              <p><b>Pan</b> : {{ value.pan_no }}</p>
+              <p><b>PF // Pension No</b> : HIL EPF Trust-GN/GGN/5572/415840</p>
+              <p><b>UAN No</b> : {{ value.uan_no }}</p>
             </li>
             {% endfor %}
           </ul>
         </div>
         <div class="topbodycontentright">
           {% for value in results %}
-          <p>Bank Name : HDFC Bank</p>
-          <p>Location (CWL) : Chennai</p>
-          <p>Band : E2</p>
-          <p>Days worked in month : 31.00</p>
-          <p>LWP Current/ Previous Month : 0.00/0.00</p>
-          <p>Sabbatical Leave Current/Previous Mon : 0.00/0.00</p>
+          <p><b>Bank Name</b> : HDFC Bank</p>
+          <p><b>Location (CWL)</b> : Chennai</p>
+          <p><b>Band</b> : E2</p>
+          <p><b>Days worked in month</b> : 31.00</p>
+          <p><b>LWP Current/ Previous Month</b> : 0.00/0.00</p>
+          <p><b>Sabbatical Leave Current/Previous Mon</b> : 0.00/0.00</p>
 
           {% endfor %}
         </div>
@@ -66,15 +66,25 @@
           <p>Standard Monthly Salary</p>
           <p>INR</p>
         </div>
-        <div class="topbodycenter">
+        <div class="topbodyheadercenter">
           <p>Earning</p>
           <p>INR</p>
         </div>
-        <div class="topbodyright">
+        <div class="topbodyheaderright">
           <p>Deductions</p>
           <p>INR</p>
         </div>
       </div>
     </div>
+    <button class="printbutton">Print Payslip</button>
+    <script>
+      document.querySelector("button").addEventListener("click", () => {
+        document.querySelector("button").style.display = "none";
+        window.print();
+        setTimeout(() => {
+          document.querySelector("button").style.display = "block";
+        }, 5000);
+      });
+    </script>
   </body>
 </html>

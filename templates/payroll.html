@@ -23,7 +23,9 @@
         <div class="headercenter">
           <h3>Salary Payslip</h3>
           <p>Pay Period</p>
-          <p><b>Saranya S</b></p>
+          {% for value in results %}
+          <p><b>{{ value.name }}</b></p>
+          {% endfor %}
         </div>
         <div class="headerright">
           <img src="{% static 'assets/images/logo.png' %}" alt="Logo" />
@@ -38,11 +40,26 @@
               <p>Employee ID : {{ value.id }}</p>
               <p>Department : {{ value.dept }}</p>
               <p>Email : {{ value.email }}</p>
+              <p>Designation : {{ value.designation }}</p>
+              <p>Gender : {{ value.gender }}</p>
+              <p>Pan : {{ value.pan_no }}</p>
+              <p>PF // Pension No : HIL EPF Trust-GN/GGN/5572/415840</p>
+              <p>UAN No : {{ value.uan_no }}</p>
             </li>
             {% endfor %}
           </ul>
         </div>
-        <div class="topbodycontentright"></div>
+        <div class="topbodycontentright">
+          {% for value in results %}
+          <p>Bank Name : HDFC Bank</p>
+          <p>Location (CWL) : Chennai</p>
+          <p>Band : E2</p>
+          <p>Days worked in month : 31.00</p>
+          <p>LWP Current/ Previous Month : 0.00/0.00</p>
+          <p>Sabbatical Leave Current/Previous Mon : 0.00/0.00</p>
+
+          {% endfor %}
+        </div>
       </div>
       <div class="topbodyheader">
         <div class="topbodyheaderleft">

@@ -4,15 +4,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <title>Payroll</title>
   </head>
   <body>
     <div class="main">
+      <h1>Payroll Management</h1>
       <div class="forms">
         <form method="POST">
           {% csrf_token %} {{form.as_p}}
-          <input type="submit" value="Save" id="savebutton" />
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>

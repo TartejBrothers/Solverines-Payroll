@@ -5,17 +5,22 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
   color: #ffffff;
+  overflow-x: hidden;
   box-sizing: border-box;
+}
+*::-webkit-scrollbar {
+  display: none;
 }
 html {
   background-color: #000000;
 }
 body {
   background-color: black;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .main {
   width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -37,8 +42,9 @@ body {
 .forms form input {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   width: calc(80vw - 10px);
+  color: #000000;
 }
 .forms form::placeholder {
   color: #000000;
@@ -46,9 +52,7 @@ body {
 .forms form input[type="text"]:focus {
   outline: 1px solid orange;
 }
-.forms form input::selection {
-  color: #000000;
-}
+
 .forms form button {
   background-color: #f50057;
   color: #ffffff;

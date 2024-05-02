@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/payroll.css' %}"
+    />
+    <title>Payroll</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="headercenter">
+          <h3>Salary Payslip</h3>
+          <p>Pay Period</p>
+          <p><b>Saranya S</b></p>
+        </div>
+        <div class="headerright">
+          <img src="{% static 'assets/images/logo.png' %}" alt="Logo" />
+          <p><b>HCL Technologies Ltd.</b></p>
+        </div>
+      </div>
+      <div class="topbodycontent">
+        <div class="topbodycontentleft">
+          <ul>
+            {% for value in results %}
+            <li>
+              <p>Employee ID : {{ value.id }}</p>
+              <p>Department : {{ value.dept }}</p>
+              <p>Email : {{ value.email }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="topbodycontentright"></div>
+      </div>
+      <div class="topbodyheader">
+        <div class="topbodyheaderleft">
+          <p>Standard Monthly Salary</p>
+          <p>INR</p>
+        </div>
+        <div class="topbodycenter">
+          <p>Earning</p>
+          <p>INR</p>
+        </div>
+        <div class="topbodyright">
+          <p>Deductions</p>
+          <p>INR</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

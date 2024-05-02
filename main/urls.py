@@ -21,5 +21,7 @@ from files import views
 
 urlpatterns = [
     path("", views.home, name="home"),
+    path("payroll/", views.payroll, name="payroll"),
     path("admin/", admin.site.urls),
+    path("search/", views.search, name="search"),
 ]

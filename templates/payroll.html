@@ -52,8 +52,8 @@
           <p><b>Bank Name</b> : {{ value.bankname }}</p>
           <p><b>AC No</b> : {{ value.ac_no }}</p>
           <p><b>Location (CWL)</b> : Chennai</p>
-          <p><b>Days worked in month</b> : 31.00</p>
-          <p><b>Leaves Taken</b> : 0.00</p>
+          <p><b>Days worked in month</b> : 31</p>
+          <p><b>Leaves Taken</b> : 0</p>
 
           <p><b>Monthly Salary</b> {{ value.salary }}</p>
           {% endfor %}
@@ -69,6 +69,45 @@
           <p>Deductions</p>
           <p>INR</p>
         </div>
+      </div>
+      <div class="topbodycontent">
+        <div class="topbodycontentleft">
+          <div class="topbodysalary">
+            {% for value in results %}
+            <ul>
+              <li>
+                <p>Basic Salary</p>
+                <p>{{ basic }}</p>
+              </li>
+              <li>
+                <p>House Rent Allowance</p>
+                <p>{{ hra }}</p>
+              </li>
+              <li>
+                <p>Conveyance Allowance</p>
+                <p>{{ conveyance }}</p>
+              </li>
+              <li>
+                <p>Mobile Allowance</p>
+                <p>{{ mobile }}</p>
+              </li>
+              <li>
+                <p>Medical Allowance</p>
+                <p>{{ medical }}</p>
+              </li>
+              <li>
+                <p>Leave Allowance</p>
+                <p>{{ leave }}</p>
+              </li>
+              <li>
+                <p>Internet Allowance</p>
+                <p>{{ internet }}</p>
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="topbodycontentright"></div>
       </div>
     </div>
     <button class="printbutton">Print Payslip</button>

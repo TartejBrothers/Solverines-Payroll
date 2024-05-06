@@ -18,11 +18,32 @@ def search(request):
 
 def payroll(request):
     query = request.GET.get("query")
-    print(query)
+
     results = Database.objects.all()
-    print(results)
+    ibasic = None
+    if results.exists():
+        total_salary = sum(result.salary for result in results)
+        basic = total_salary * 0.3
+
     if query:
         results = Database.objects.filter(id=query)
-    context = {"results": results}
-    print(context)
+    hra = basic * 0.6
+    pf = basic * 0.12
+    leave = 3333
+    medical = 8333
+    mobile = 4000
+    internet = 2000
+    conveyance = total_salary - basic - hra - pf - leave - medical - mobile - internet
+    context = {
+        "results": results,
+        "basic": basic,
+        "hra": hra,
+        "pf": pf,
+        "leave": leave,
+        "medical": medical,
+        "mobile": mobile,
+        "internet": internet,
+        "conveyance": conveyance,
+    }
+    print(conveyance)
     return render(request, "payroll.html", context)

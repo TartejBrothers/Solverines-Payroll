@@ -29,7 +29,6 @@
         </div>
         <div class="headerright">
           <img src="{% static 'assets/images/logo.png' %}" alt="Logo" />
-          <p><b>HCL Technologies Ltd.</b></p>
         </div>
       </div>
       <div class="topbodycontent">
@@ -43,21 +42,20 @@
               <p><b>Designation</b> : {{ value.designation }}</p>
               <p><b>Gender</b> : {{ value.gender }}</p>
               <p><b>Pan</b> : {{ value.pan_no }}</p>
-              <p><b>PF // Pension No</b> : HIL EPF Trust-GN/GGN/5572/415840</p>
-              <p><b>UAN No</b> : {{ value.uan_no }}</p>
+              <p><b>Aadhar No</b> : {{ value.aadhar_no }}</p>
             </li>
             {% endfor %}
           </ul>
         </div>
         <div class="topbodycontentright">
           {% for value in results %}
-          <p><b>Bank Name</b> : HDFC Bank</p>
+          <p><b>Bank Name</b> : {{ value.bankname }}</p>
+          <p><b>AC No</b> : {{ value.ac_no }}</p>
           <p><b>Location (CWL)</b> : Chennai</p>
-          <p><b>Band</b> : E2</p>
           <p><b>Days worked in month</b> : 31.00</p>
-          <p><b>LWP Current/ Previous Month</b> : 0.00/0.00</p>
-          <p><b>Sabbatical Leave Current/Previous Mon</b> : 0.00/0.00</p>
+          <p><b>Leaves Taken</b> : 0.00</p>
 
+          <p><b>Monthly Salary</b> {{ value.salary }}</p>
           {% endfor %}
         </div>
       </div>
@@ -66,10 +64,7 @@
           <p>Standard Monthly Salary</p>
           <p>INR</p>
         </div>
-        <div class="topbodyheadercenter">
-          <p>Earning</p>
-          <p>INR</p>
-        </div>
+
         <div class="topbodyheaderright">
           <p>Deductions</p>
           <p>INR</p>

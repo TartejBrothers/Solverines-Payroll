@@ -4,7 +4,7 @@ from .models import *
 from import_export.admin import ExportActionMixin
 
 
-class Valueadmin(ExportActionMixin, admin.ModelAdmin):
+class Databaseadmin(ExportActionMixin, admin.ModelAdmin):
     list_display = [
         "name",
         "id",
@@ -15,8 +15,12 @@ class Valueadmin(ExportActionMixin, admin.ModelAdmin):
         "designation",
         "gender",
         "pan_no",
-        "uan_no",
+        "aadhar_no",
+        "dateofbirth",
+        "dateofjoining",
+        "bankname",
+        "ac_no",
     ]
 
 
-admin.site.register(Values, Valueadmin)
+admin.site.register(Database, Databaseadmin)

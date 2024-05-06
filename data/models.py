@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class Values(models.Model):
+class Database(models.Model):
     name = models.TextField()
     id = models.TextField(primary_key=True)
     dept = models.TextField()
@@ -12,4 +12,8 @@ class Values(models.Model):
     designation = models.TextField()
     gender = models.TextField()
     pan_no = models.TextField()
-    uan_no = models.IntegerField()
+    aadhar_no = models.IntegerField()
+    dateofbirth = models.TextField()
+    dateofjoining = models.TextField()
+    bankname = models.TextField()
+    ac_no = models.IntegerField()

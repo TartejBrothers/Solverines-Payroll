@@ -1,11 +1,11 @@
 from django import forms
 from django.forms import ModelForm, TextInput, EmailInput, NumberInput
-from .models import Values
+from .models import Database
 
 
 class add_data(ModelForm):
     class Meta:
-        model = Values
+        model = Database
         fields = [
             "name",
             "id",
@@ -16,7 +16,11 @@ class add_data(ModelForm):
             "designation",
             "gender",
             "pan_no",
-            "uan_no",
+            "aadhar_no",
+            "dateofbirth",
+            "dateofjoining",
+            "bankname",
+            "ac_no",
         ]
         widgets = {
             "name": TextInput(attrs={"class": "form-control", "placeholder": "Name"}),
@@ -42,7 +46,31 @@ class add_data(ModelForm):
             "pan_no": TextInput(
                 attrs={"class": "form-control", "placeholder": "Pan Number"}
             ),
-            "uan_no": NumberInput(
-                attrs={"class": "form-control", "placeholder": "UAN Number"}
+            "aadhar_no": TextInput(
+                attrs={"class": "form-control", "placeholder": "Aadhar Number"}
+            ),
+            "dateofbirth": TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Date Of Birth",
+                    "label": "Date Of Birth",
+                }
+            ),
+            "dateofjoining": TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Date Of Joining",
+                    "label": "Date Of Joining",
+                }
+            ),
+            "bankname": TextInput(
+                attrs={"class": "form-control", "placeholder": "Bank Name"}
+            ),
+            "ac_no": NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Account Number",
+                    "label": "Account Number",
+                }
             ),
         }

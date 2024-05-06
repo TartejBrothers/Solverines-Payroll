@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "files",
+    "data",
     "import_export",
 ]
 
@@ -68,7 +68,7 @@ ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "Payroll",
+        "NAME": "Payroll_main",
         "USER": "Accounts_owner",
         "PASSWORD": "sCTKYyM39GnI",
         "HOST": "ep-rapid-cloud-a1b5r0u0.ap-southeast-1.aws.neon.tech",

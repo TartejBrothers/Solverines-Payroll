@@ -22,8 +22,9 @@
       <div class="header">
         <div class="headercenter">
           <h3>Salary Payslip</h3>
-          <p>Pay Period</p>
           {% for value in results %}
+          <p>Pay Period - {{ monthname }}</p>
+
           <p><b>{{ value.name }}</b></p>
           {% endfor %}
         </div>

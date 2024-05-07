@@ -16,6 +16,7 @@
       <h1>Payroll Management</h1>
       <form method="GET" action="{% url 'payroll' %}">
         <input type="text" name="query" placeholder="Enter search term" />
+        <input type="number" name="month" value="1" placeholder="month" />
         <button type="submit">Search</button>
       </form>
     </div>

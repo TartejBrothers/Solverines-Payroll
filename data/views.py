@@ -18,6 +18,34 @@ def search(request):
 
 def payroll(request):
     query = request.GET.get("query")
+    month = request.GET.get("month")
+    print(month)
+    month = int(month)
+    monthname = None
+    if month == 1:
+        monthname = "January"
+    elif month == 2:
+        monthname = "February"
+    elif month == 3:
+        monthname = "March"
+    elif month == 4:
+        monthname = "April"
+    elif month == 5:
+        monthname = "May"
+    elif month == 6:
+        monthname = "June"
+    elif month == 7:
+        monthname = "July"
+    elif month == 8:
+        monthname = "August"
+    elif month == 9:
+        monthname = "September"
+    elif month == 10:
+        monthname = "October"
+    elif month == 11:
+        monthname = "November"
+    elif month == 12:
+        monthname = "December"
 
     results = Database.objects.all()
     ibasic = None
@@ -43,6 +71,7 @@ def payroll(request):
         "medical": medical,
         "mobile": mobile,
         "internet": internet,
+        "monthname": monthname,
         "conveyance": conveyance,
     }
     print(conveyance)

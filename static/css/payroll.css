@@ -136,3 +136,8 @@ p b {
 
   flex-direction: row;
 }
+@media print {
+  @page {
+    size: landscape;
+  }
+}

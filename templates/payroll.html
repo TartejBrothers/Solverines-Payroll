@@ -4,7 +4,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link
       rel="stylesheet"
       type="text/css"
@@ -22,11 +21,8 @@
       <div class="header">
         <div class="headercenter">
           <h3>Salary Payslip</h3>
-          {% for value in results %}
           <p>Pay Period - {{ monthname }}</p>
-
-          <p><b>{{ value.name }}</b></p>
-          {% endfor %}
+          <p><b>{{ employee.name }}</b></p>
         </div>
         <div class="headerright">
           <img src="{% static 'assets/images/logo.png' %}" alt="Logo" />
@@ -35,29 +31,24 @@
       <div class="topbodycontent">
         <div class="topbodycontentleft">
           <ul>
-            {% for value in results %}
             <li>
-              <p><b>Employee ID</b> : {{ value.id }}</p>
-              <p><b>Department</b> : {{ value.dept }}</p>
-              <p><b>Email</b> : {{ value.email }}</p>
-              <p><b>Designation</b> : {{ value.designation }}</p>
-              <p><b>Gender</b> : {{ value.gender }}</p>
-              <p><b>Pan</b> : {{ value.pan_no }}</p>
-              <p><b>Aadhar No</b> : {{ value.aadhar_no }}</p>
+              <p><b>Employee ID</b> : {{ employee.id }}</p>
+              <p><b>Department</b> : {{ employee.dept }}</p>
+              <p><b>Email</b> : {{ employee.email }}</p>
+              <p><b>Designation</b> : {{ employee.designation }}</p>
+              <p><b>Gender</b> : {{ employee.gender }}</p>
+              <p><b>Pan</b> : {{ employee.pan_no }}</p>
+              <p><b>Aadhar No</b> : {{ employee.aadhar_no }}</p>
             </li>
-            {% endfor %}
           </ul>
         </div>
         <div class="topbodycontentright">
-          {% for value in results %}
-          <p><b>Bank Name</b> : {{ value.bankname }}</p>
-          <p><b>AC No</b> : {{ value.ac_no }}</p>
+          <p><b>Bank Name</b> : {{ employee.bankname }}</p>
+          <p><b>AC No</b> : {{ employee.ac_no }}</p>
           <p><b>Location (CWL)</b> : Chennai</p>
           <p><b>Days worked in month</b> : 31</p>
           <p><b>Leaves Taken</b> : 0</p>
-
-          <p><b>Monthly Salary</b> {{ value.salary }}</p>
-          {% endfor %}
+          <p><b>Monthly Salary</b> {{ employee.salary }}</p>
         </div>
       </div>
       <div class="topbodyheader">
@@ -65,7 +56,6 @@
           <p>Standard Monthly Salary</p>
           <p>INR</p>
         </div>
-
         <div class="topbodyheaderright">
           <p>Deductions</p>
           <p>INR</p>
@@ -74,7 +64,6 @@
       <div class="topbodycontent">
         <div class="topbodycontentleft">
           <div class="topbodysalary">
-            {% for value in results %}
             <ul>
               <li>
                 <p>Basic Salary</p>
@@ -105,7 +94,6 @@
                 <p>{{ internet }}</p>
               </li>
             </ul>
-            {% endfor %}
           </div>
         </div>
         <div class="topbodycontentright"></div>

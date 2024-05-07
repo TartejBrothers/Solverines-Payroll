@@ -48,22 +48,22 @@ def payroll(request):
         monthname = "December"
 
     results = Database.objects.all()
-    ibasic = None
-    if results.exists():
-        total_salary = sum(result.salary for result in results)
-        basic = total_salary * 0.3
 
     if query:
-        results = Database.objects.filter(id=query)
+        employee = Database.objects.get(id=query)
+    salary = employee.salary
+    print(salary)
+    print(employee)
+    basic = salary * 0.3
     hra = basic * 0.6
     pf = basic * 0.12
     leave = 3333
     medical = 8333
     mobile = 4000
     internet = 2000
-    conveyance = total_salary - basic - hra - pf - leave - medical - mobile - internet
+    conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
     context = {
-        "results": results,
+        "employee": employee,
         "basic": basic,
         "hra": hra,
         "pf": pf,
@@ -74,5 +74,4 @@ def payroll(request):
         "monthname": monthname,
         "conveyance": conveyance,
     }
-    print(conveyance)
     return render(request, "payroll.html", context)

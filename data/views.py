@@ -27,6 +27,8 @@ def payroll(request):
     mobile = request.GET.get("mobile")
     internet = request.GET.get("internet")
     conveyance = request.GET.get("conveyance")
+    leaves = request.GET.get("leaves")
+    working = request.GET.get("working")
     reimbursement = request.GET.get("reimbursement")
     print(month)
     month = int(month)
@@ -84,5 +86,7 @@ def payroll(request):
         "monthname": monthname,
         "conveyance": conveyance,
         "reimbursement": reimbursement,
+        "leaves": leaves,
+        "working": working,
     }
     return render(request, "payroll.html", context)

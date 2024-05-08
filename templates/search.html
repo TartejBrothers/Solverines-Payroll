@@ -17,37 +17,113 @@
       <form method="GET" action="{% url 'payroll' %}" class="searchform">
         <label for="query">ID</label>
         <input type="text" name="query" id="query" placeholder="Enter ID" />
-        
+
         <label for="month">Month</label>
-        <input type="number" name="month" id="month" value="1" placeholder="Month Name" />
-        
+        <input
+          type="number"
+          name="month"
+          id="month"
+          value="1"
+          placeholder="Month Name"
+        />
+        <label for="working">Working Days</label>
+        <input
+          type="number"
+          name="working"
+          id="leaves"
+          value="30"
+          placeholder="Working Days"
+        />
+
+        <label for="leaves">Leaves</label>
+        <input
+          type="number"
+          name="leaves"
+          id="leaves"
+          value="0"
+          placeholder="Leaves Taken"
+        />
+
         <label for="basic">Basic</label>
-        <input type="number" name="basic" id="basic" value="0" placeholder="Basic" />
-        
+        <input
+          type="number"
+          name="basic"
+          id="basic"
+          value="0"
+          placeholder="Basic"
+          step=".01"
+        />
+
         <label for="hra">HRA</label>
-        <input type="number" name="hra" id="hra" value="0" placeholder="HRA" />
-        
+        <input
+          type="number"
+          name="hra"
+          id="hra"
+          value="0"
+          step=".01"
+          placeholder="HRA"
+        />
+
         <label for="pf">PF</label>
-        <input type="number" name="pf" id="pf" value="0" placeholder="PF" />
-        
-        <label for="leave">Leave</label>
-        <input type="number" name="leave" id="leave" value="0" placeholder="Leave" />
-        
+        <input
+          type="number"
+          name="pf"
+          id="pf"
+          value="0"
+          step=".01"
+          placeholder="PF"
+        />
+
         <label for="conveyance">Conveyance</label>
-        <input type="number" name="conveyance" id="conveyance" value="0" placeholder="Conveyance" />
-        
+        <input
+          type="number"
+          name="conveyance"
+          id="conveyance"
+          value="0"
+          step=".01"
+          placeholder="Conveyance"
+        />
+
         <label for="medical">Medical</label>
-        <input type="number" name="medical" id="medical" value="0" placeholder="Medical" />
-        
-        <label for="Mobile">Mobile</label>
-        <input type="number" name="Mobile" id="Mobile" value="0" placeholder="Mobile" />
-        
+        <input
+          type="number"
+          name="medical"
+          id="medical"
+          value="0"
+          step=".01"
+          placeholder="Medical"
+        />
+
+        <label for="mobile">Mobile</label>
+        <input
+          type="number"
+          name="mobile"
+          id="mobile"
+          value="0"
+          step=".01"
+          placeholder="mobile"
+        />
+
         <label for="internet">Internet</label>
-        <input type="number" name="internet" id="internet" value="0" placeholder="Internet" />
-        
+        <input
+          type="number"
+          name="internet"
+          step=".01"
+          id="internet"
+          value="0"
+          placeholder="Internet"
+        />
+
         <label for="reimbursement">Reimbursement</label>
-        <input type="number" name="reimbursement" id="reimbursement" value="0" placeholder="Reimbursement" />
-        
+        <input
+          type="number"
+          name="reimbursement"
+          step=".01"
+          id="reimbursement"
+          value="0"
+          placeholder="Reimbursement"
+        />
+
         <button type="submit">Search</button>
       </form>
     </div>

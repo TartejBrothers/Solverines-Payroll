@@ -34,20 +34,21 @@
             <li>
               <p><b>Employee ID</b> : {{ employee.id }}</p>
               <p><b>Department</b> : {{ employee.dept }}</p>
-              <p><b>Email</b> : {{ employee.email }}</p>
               <p><b>Designation</b> : {{ employee.designation }}</p>
               <p><b>Gender</b> : {{ employee.gender }}</p>
               <p><b>Pan</b> : {{ employee.pan_no }}</p>
               <p><b>Aadhar No</b> : {{ employee.aadhar_no }}</p>
+              <p><b>Date Of Birth</b> : {{ employee.dateofbirth }}</p>
             </li>
           </ul>
         </div>
         <div class="topbodycontentright">
           <p><b>Bank Name</b> : {{ employee.bankname }}</p>
           <p><b>AC No</b> : {{ employee.ac_no }}</p>
+          <p><b>Date Of Joining</b> : {{ employee.dateofjoining }}</p>
           <p><b>Location (CWL)</b> : Chennai</p>
-          <p><b>Days worked in month</b> : 31</p>
-          <p><b>Leaves Taken</b> : 0</p>
+          <p><b>Days worked in month</b> : {{ working }}</p>
+          <p><b>Leaves Taken</b> : {{ leaves }}</p>
           <p><b>Monthly Salary</b> {{ employee.salary }}</p>
         </div>
       </div>
@@ -92,6 +93,10 @@
               <li>
                 <p>Internet Allowance</p>
                 <p>{{ internet }}</p>
+              </li>
+              <li>
+                <p>Reimbursement</p>
+                <p>{{ reimbursement }}</p>
               </li>
             </ul>
           </div>

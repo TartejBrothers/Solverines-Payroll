@@ -9,8 +9,6 @@ class Databaseadmin(ExportActionMixin, admin.ModelAdmin):
         "name",
         "id",
         "dept",
-        "email",
-        "phone",
         "salary",
         "designation",
         "gender",
@@ -20,6 +18,7 @@ class Databaseadmin(ExportActionMixin, admin.ModelAdmin):
         "dateofjoining",
         "bankname",
         "ac_no",
+        "uan_no",
     ]
 
 

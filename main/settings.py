@@ -16,7 +16,7 @@ SECRET_KEY = "django-insecure-2!lek2o+i-n4oh*ttm53kkjslpkb4s40zd5$fl*!=$d!a*txuk
 DEBUG = False
 
 ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1", "*"]
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 WSGI_APPLICATION = "vercel_app.wsgi.app"
 # Application definition

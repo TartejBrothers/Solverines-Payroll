@@ -10,8 +10,6 @@ class add_data(ModelForm):
             "name",
             "id",
             "dept",
-            "email",
-            "phone",
             "salary",
             "designation",
             "gender",
@@ -21,18 +19,13 @@ class add_data(ModelForm):
             "dateofjoining",
             "bankname",
             "ac_no",
+            "uan_no",
         ]
         widgets = {
             "name": TextInput(attrs={"class": "form-control", "placeholder": "Name"}),
             "id": TextInput(attrs={"class": "form-control", "placeholder": "ID"}),
             "dept": TextInput(
                 attrs={"class": "form-control", "placeholder": "Department"}
-            ),
-            "email": EmailInput(
-                attrs={"class": "form-control", "placeholder": "Email"}
-            ),
-            "phone": NumberInput(
-                attrs={"class": "form-control", "placeholder": "Phone"}
             ),
             "salary": NumberInput(
                 attrs={"class": "form-control", "placeholder": "Salary"}
@@ -61,9 +54,14 @@ class add_data(ModelForm):
             "ac_no": NumberInput(
                 attrs={"class": "form-control", "placeholder": "Account Number"}
             ),
+            "uan_no": NumberInput(
+                attrs={"class": "form-control", "placeholder": "UAN Number"}
+            ),
         }
         labels = {
             "dateofbirth": "Date Of Birth",
             "dateofjoining": "Date Of Joining",
+            "bankname": "Bank Name",
             "ac_no": "Account Number",
+            "uan_no": "UAN Number",
         }

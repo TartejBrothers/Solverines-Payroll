@@ -18,7 +18,7 @@
   </head>
   <body>
     <div class="main" id="main">
-      <div class="header">
+      <div class="payrollheader">
         <div class="headercenter">
           <h3>Salary Payslip</h3>
           <p>Pay Period - {{ monthname }}</p>
@@ -34,21 +34,22 @@
             <li>
               <p><b>Employee ID</b> : {{ employee.id }}</p>
               <p><b>Department</b> : {{ employee.dept }}</p>
-              <p><b>Email</b> : {{ employee.email }}</p>
               <p><b>Designation</b> : {{ employee.designation }}</p>
               <p><b>Gender</b> : {{ employee.gender }}</p>
               <p><b>Pan</b> : {{ employee.pan_no }}</p>
               <p><b>Aadhar No</b> : {{ employee.aadhar_no }}</p>
+              <p><b>Uan No</b> : {{ employee.uan_no }}</p>
             </li>
           </ul>
         </div>
         <div class="topbodycontentright">
           <p><b>Bank Name</b> : {{ employee.bankname }}</p>
           <p><b>AC No</b> : {{ employee.ac_no }}</p>
+          <p><b>Date Of Birth</b> : {{ employee.dateofbirth }}</p>
+          <p><b>Date Of Joining</b> : {{ employee.dateofjoining }}</p>
           <p><b>Location (CWL)</b> : Chennai</p>
-          <p><b>Days worked in month</b> : 31</p>
-          <p><b>Leaves Taken</b> : 0</p>
-          <p><b>Monthly Salary</b> {{ employee.salary }}</p>
+          <p><b>Days worked in month</b> : {{ working }}</p>
+          <p><b>Leaves Taken</b> : {{ leaves }}</p>
         </div>
       </div>
       <div class="topbodyheader">
@@ -86,17 +87,62 @@
                 <p>{{ medical }}</p>
               </li>
               <li>
-                <p>Leave Allowance</p>
-                <p>{{ leave }}</p>
+                <p>Leave Travel Allowance</p>
+                <p>{{ leaveallowance }}</p>
               </li>
               <li>
                 <p>Internet Allowance</p>
                 <p>{{ internet }}</p>
               </li>
+              <li>
+                <p>Reimbursement</p>
+                <p>{{ reimbursement }}</p>
+              </li>
             </ul>
           </div>
         </div>
-        <div class="topbodycontentright"></div>
+        <div class="topbodycontentleft">
+          <div class="topbodysalary">
+            <ul>
+              <li>
+                <p>Leave Deductions</p>
+                <p>{{ leavededuction }}</p>
+              </li>
+              <li>
+                <p>Professional Tax</p>
+                <p>{{ protax }}</p>
+              </li>
+              <li>
+                <p>Income Tax</p>
+                <p>{{ inctax }}</p>
+              </li>
+              <li>
+                <p>PF (Employee Contribution)</p>
+                <p>{{ pfdeduc }}</p>
+              </li>
+              <li>
+                <p>Others</p>
+                <p>{{ otherdeduc }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="topbodyheader">
+        <div class="topbodyheaderleft">
+          <p>Total Gross Pay</p>
+          <p>{{ totalearning }}</p>
+        </div>
+        <div class="topbodyheaderright">
+          <p>Total Deductions</p>
+          <p>{{ totaldeduction }}</p>
+        </div>
+      </div>
+      <div class="topbodyheader">
+        <p>Net Pay - {{ netpay }}</p>
+      </div>
+      <div class="topbodyheader">
+        <p>In Words - {{ netpay_in_words }}</p>
       </div>
     </div>
     <button class="printbutton">Print Payslip</button>

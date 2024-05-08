@@ -6,8 +6,6 @@ class Database(models.Model):
     name = models.TextField()
     id = models.TextField(primary_key=True)
     dept = models.TextField()
-    email = models.TextField()
-    phone = models.TextField()
     salary = models.IntegerField()
     designation = models.TextField()
     gender = models.TextField()
@@ -17,3 +15,4 @@ class Database(models.Model):
     dateofjoining = models.TextField()
     bankname = models.CharField(max_length=100)
     ac_no = models.BigIntegerField()
+    uan_no = models.CharField(max_length=20)

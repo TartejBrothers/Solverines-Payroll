@@ -13,7 +13,12 @@
   </head>
   <body>
     <div class="main">
-      <h1>Payroll Management</h1>
+      <div class="header">
+        <h1>Payroll Generator</h1>
+        <div class="search">
+          <a href="search" class="searchbutton"><button>Search User</button></a>
+        </div>
+      </div>
       <div class="forms">
         <form method="POST">
           {% csrf_token %} {{form.as_p}}

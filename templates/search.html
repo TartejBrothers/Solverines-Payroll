@@ -13,41 +13,185 @@
   </head>
   <body>
     <div class="main">
-      <h1>Payroll Management</h1>
+      <div class="header">
+        <h1>Payroll Generator</h1>
+        <div class="search">
+          <a href="../" class="searchbutton"><button>Add User</button></a>
+        </div>
+      </div>
       <form method="GET" action="{% url 'payroll' %}" class="searchform">
         <label for="query">ID</label>
-        <input type="text" name="query" id="query" placeholder="Enter ID" />
-        
-        <label for="month">Month</label>
-        <input type="number" name="month" id="month" value="1" placeholder="Month Name" />
-        
-        <label for="basic">Basic</label>
-        <input type="number" name="basic" id="basic" value="0" placeholder="Basic" />
-        
-        <label for="hra">HRA</label>
-        <input type="number" name="hra" id="hra" value="0" placeholder="HRA" />
-        
-        <label for="pf">PF</label>
-        <input type="number" name="pf" id="pf" value="0" placeholder="PF" />
-        
-        <label for="leave">Leave</label>
-        <input type="number" name="leave" id="leave" value="0" placeholder="Leave" />
-        
-        <label for="conveyance">Conveyance</label>
-        <input type="number" name="conveyance" id="conveyance" value="0" placeholder="Conveyance" />
-        
-        <label for="medical">Medical</label>
-        <input type="number" name="medical" id="medical" value="0" placeholder="Medical" />
-        
-        <label for="Mobile">Mobile</label>
-        <input type="number" name="Mobile" id="Mobile" value="0" placeholder="Mobile" />
-        
-        <label for="internet">Internet</label>
-        <input type="number" name="internet" id="internet" value="0" placeholder="Internet" />
-        
-        <label for="reimbursement">Reimbursement</label>
-        <input type="number" name="reimbursement" id="reimbursement" value="0" placeholder="Reimbursement" />
-        
+        <input
+          type="text"
+          name="query"
+          id="query"
+          placeholder="Enter ID"
+          required
+        />
+
+        <label for="month">Month:</label>
+        <input
+          type="number"
+          name="month"
+          id="month"
+          value="1"
+          placeholder="Month Name"
+        />
+        <label for="working">Working Days:</label>
+        <input
+          type="number"
+          name="working"
+          id="leaves"
+          value="30"
+          placeholder="Working Days"
+        />
+
+        <label for="leaves">Leaves:</label>
+        <input
+          type="number"
+          name="leaves"
+          id="leaves"
+          value="0"
+          placeholder="Leaves Taken"
+        />
+        <h2>Salary Components</h2>
+        <label for="basic">Basic:</label>
+        <input
+          type="number"
+          name="basic"
+          id="basic"
+          value="0"
+          placeholder="Basic"
+          step=".01"
+        />
+
+        <label for="hra">HRA:</label>
+        <input
+          type="number"
+          name="hra"
+          id="hra"
+          value="0"
+          step=".01"
+          placeholder="HRA"
+        />
+
+        <label for="pf">PF:</label>
+        <input
+          type="number"
+          name="pf"
+          id="pf"
+          value="0"
+          step=".01"
+          placeholder="PF"
+        />
+
+        <label for="conveyance">Conveyance:</label>
+        <input
+          type="number"
+          name="conveyance"
+          id="conveyance"
+          value="0"
+          step=".01"
+          placeholder="Conveyance"
+        />
+
+        <label for="medical">Medical:</label>
+        <input
+          type="number"
+          name="medical"
+          id="medical"
+          value="8333.33"
+          step=".01"
+          placeholder="Medical"
+        />
+        <label for="leaveallowance">Leave Travel Allowance:</label>
+        <input
+          type="number"
+          name="leaveallowance"
+          id="leaveallowance"
+          value="3333.33"
+          step=".01"
+          placeholder="Leave Travel Allowance"
+        />
+
+        <label for="mobile">Mobile:</label>
+        <input
+          type="number"
+          name="mobile"
+          id="mobile"
+          value="4000"
+          step=".01"
+          placeholder="mobile"
+        />
+
+        <label for="internet">Internet:</label>
+        <input
+          type="number"
+          name="internet"
+          step=".01"
+          id="internet"
+          value="2000"
+          placeholder="Internet"
+        />
+
+        <label for="reimbursement">Reimbursement:</label>
+        <input
+          type="number"
+          name="reimbursement"
+          step=".01"
+          id="reimbursement"
+          value="0"
+          placeholder="Reimbursement"
+        />
+
+        <h2>Deductions</h2>
+        <label for="leavededuction">Leave Deductions:</label>
+        <input
+          type="number"
+          name="leavededuction"
+          step=".01"
+          id="leavededuction"
+          value="0"
+          placeholder="Internet"
+        />
+
+        <label for="protax">Professional Tax:</label>
+        <input
+          type="number"
+          name="protax"
+          step=".01"
+          id="protax"
+          value="0"
+          placeholder="Professional Tax"
+        />
+        <label for="inctax">Income Tax:</label>
+        <input
+          type="number"
+          name="inctax"
+          step=".01"
+          id="inctax"
+          value="0"
+          placeholder="Income Tax"
+        />
+        <label for="pfdeduc">PF (Employee Contribution):</label>
+        <input
+          type="number"
+          name="pfdeduc"
+          step=".01"
+          id="pfdeduc"
+          value="1800"
+          placeholder="PF (Employee Contribution)"
+        />
+        <label for="otherdeduc">Others:</label>
+        <input
+          type="number"
+          name="otherdeduc"
+          step=".01"
+          id="otherdeduc"
+          value="0"
+          placeholder="Others"
+        />
+
         <button type="submit">Search</button>
       </form>
     </div>

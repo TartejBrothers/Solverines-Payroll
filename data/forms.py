@@ -50,27 +50,20 @@ class add_data(ModelForm):
                 attrs={"class": "form-control", "placeholder": "Aadhar Number"}
             ),
             "dateofbirth": TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Date Of Birth",
-                    "label": "Date Of Birth",
-                }
+                attrs={"class": "form-control", "placeholder": "Date Of Birth"}
             ),
             "dateofjoining": TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Date Of Joining",
-                    "label": "Date Of Joining",
-                }
+                attrs={"class": "form-control", "placeholder": "Date Of Joining"}
             ),
             "bankname": TextInput(
                 attrs={"class": "form-control", "placeholder": "Bank Name"}
             ),
             "ac_no": NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Account Number",
-                    "label": "Account Number",
-                }
+                attrs={"class": "form-control", "placeholder": "Account Number"}
             ),
+        }
+        labels = {
+            "dateofbirth": "Date Of Birth",
+            "dateofjoining": "Date Of Joining",
+            "ac_no": "Account Number",
         }

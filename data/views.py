@@ -19,6 +19,15 @@ def search(request):
 def payroll(request):
     query = request.GET.get("query")
     month = request.GET.get("month")
+    basic = request.GET.get("basic")
+    hra = request.GET.get("hra")
+    pf = request.GET.get("pf")
+    leave = request.GET.get("leave")
+    medical = request.GET.get("medical")
+    mobile = request.GET.get("mobile")
+    internet = request.GET.get("internet")
+    conveyance = request.GET.get("conveyance")
+    reimbursement = request.GET.get("reimbursement")
     print(month)
     month = int(month)
     monthname = None
@@ -54,14 +63,15 @@ def payroll(request):
     salary = employee.salary
     print(salary)
     print(employee)
-    basic = salary * 0.3
-    hra = basic * 0.6
-    pf = basic * 0.12
-    leave = 3333
-    medical = 8333
-    mobile = 4000
-    internet = 2000
-    conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
+    # basic = salary * 0.3
+    # hra = basic * 0.6
+    # pf = basic * 0.12
+    # leave = 3333
+    # medical = 8333
+    # mobile = 4000
+    # internet = 2000
+    # conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
+
     context = {
         "employee": employee,
         "basic": basic,
@@ -73,5 +83,6 @@ def payroll(request):
         "internet": internet,
         "monthname": monthname,
         "conveyance": conveyance,
+        "reimbursement": reimbursement,
     }
     return render(request, "payroll.html", context)

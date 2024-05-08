@@ -42,26 +42,52 @@ body {
 .forms form input {
   padding: 10px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
   width: calc(80vw - 10px);
   color: #000000;
+  margin-bottom: 10px;
 }
 .forms form::placeholder {
   color: #000000;
 }
+
 .forms form input[type="text"]:focus {
   outline: 1px solid orange;
 }
 
-.forms form button {
+form button {
   background-color: #f50057;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  margin-top: 20px;
+  border-radius: 20px;
   cursor: pointer;
 }
-
+.searchform {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 80%;
+  flex-direction: column;
+  gap: 10px;
+}
+.searchform label {
+  width: 85%;
+  margin: 0px auto;
+}
+.searchform input {
+  width: 90%;
+  border: none;
+  margin: 0px auto;
+  border-radius: 20px;
+  color: #000000;
+  padding: 10px 20px;
+}
+.searchform button {
+  width: 30%;
+  margin: 20px auto;
+}
 @media screen and (max-width: 1000px) {
   .main h1 {
     font-size: 20px;

@@ -31,6 +31,22 @@ body {
   width: 80%;
   text-align: center;
 }
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.search button {
+  background-color: #f50057;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
 .forms form {
   display: flex;
   flex-direction: column;
@@ -68,21 +84,23 @@ form button {
   display: flex;
   justify-content: center;
   padding: 10px;
-  width: 80%;
+  width: 100vw;
   flex-direction: column;
-  gap: 10px;
 }
 .searchform label {
-  width: 85%;
+  width: calc(80vw - 10px);
   margin: 0px auto;
 }
 .searchform input {
-  width: 90%;
+  width: calc(80vw - 10px);
   border: none;
-  margin: 0px auto;
+  margin: 0px auto 20px auto;
   border-radius: 20px;
   color: #000000;
   padding: 10px 20px;
+}
+.searchform h2 {
+  text-align: center;
 }
 .searchform button {
   width: 30%;

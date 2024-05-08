@@ -18,7 +18,7 @@
   </head>
   <body>
     <div class="main" id="main">
-      <div class="header">
+      <div class="payrollheader">
         <div class="headercenter">
           <h3>Salary Payslip</h3>
           <p>Pay Period - {{ monthname }}</p>
@@ -87,8 +87,8 @@
                 <p>{{ medical }}</p>
               </li>
               <li>
-                <p>Leave Allowance</p>
-                <p>{{ leave }}</p>
+                <p>Leave Travel Allowance</p>
+                <p>{{ leaveallowance }}</p>
               </li>
               <li>
                 <p>Internet Allowance</p>
@@ -101,7 +101,48 @@
             </ul>
           </div>
         </div>
-        <div class="topbodycontentright"></div>
+        <div class="topbodycontentleft">
+          <div class="topbodysalary">
+            <ul>
+              <li>
+                <p>Leave Deductions</p>
+                <p>{{ leavededuction }}</p>
+              </li>
+              <li>
+                <p>Professional Tax</p>
+                <p>{{ protax }}</p>
+              </li>
+              <li>
+                <p>Income Tax</p>
+                <p>{{ inctax }}</p>
+              </li>
+              <li>
+                <p>PF (Employee Contribution)</p>
+                <p>{{ pfdeduc }}</p>
+              </li>
+              <li>
+                <p>Others</p>
+                <p>{{ otherdeduc }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="topbodyheader">
+        <div class="topbodyheaderleft">
+          <p>Total Gross Pay</p>
+          <p>{{ totalearning }}</p>
+        </div>
+        <div class="topbodyheaderright">
+          <p>Total Deductions</p>
+          <p>{{ totaldeduction }}</p>
+        </div>
+      </div>
+      <div class="topbodyheader">
+        <p>Net Pay - {{ netpay }}</p>
+      </div>
+      <div class="topbodyheader">
+        <p>In Words - {{ netpay_in_words }}</p>
       </div>
     </div>
     <button class="printbutton">Print Payslip</button>

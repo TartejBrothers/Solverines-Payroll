@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import add_data
 from .models import Database
+from num2words import num2words
 
 
 def home(request):
@@ -8,6 +9,7 @@ def home(request):
     if form.is_valid():
         form.save()
         form = add_data()
+        return redirect("search")
     context = {"form": form}
     return render(request, "index.html", context)
 
@@ -24,12 +26,18 @@ def payroll(request):
     pf = request.GET.get("pf")
     leave = request.GET.get("leave")
     medical = request.GET.get("medical")
+    leaveallowance = request.GET.get("leaveallowance")
     mobile = request.GET.get("mobile")
     internet = request.GET.get("internet")
     conveyance = request.GET.get("conveyance")
     leaves = request.GET.get("leaves")
     working = request.GET.get("working")
     reimbursement = request.GET.get("reimbursement")
+    leavededuction = request.GET.get("leavededuction")
+    protax = request.GET.get("protax")
+    inctax = request.GET.get("inctax")
+    pfdeduc = request.GET.get("pfdeduc")
+    otherdeduc = request.GET.get("otherdeduc")
     print(month)
     month = int(month)
     monthname = None
@@ -73,6 +81,26 @@ def payroll(request):
     # mobile = 4000
     # internet = 2000
     # conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
+    totalearning = (
+        float(basic)
+        + float(hra)
+        + float(pf)
+        + float(medical)
+        + float(leaveallowance)
+        + float(mobile)
+        + float(internet)
+        + float(conveyance)
+        + float(reimbursement)
+    )
+    totaldeduction = (
+        float(leavededuction)
+        + float(protax)
+        + float(inctax)
+        + float(pfdeduc)
+        + float(otherdeduc)
+    )
+    netpay = round(totalearning - totaldeduction, 2)
+    netpay_in_words = convert_to_words(netpay).title()
 
     context = {
         "employee": employee,
@@ -81,6 +109,7 @@ def payroll(request):
         "pf": pf,
         "leave": leave,
         "medical": medical,
+        "leaveallowance": leaveallowance,
         "mobile": mobile,
         "internet": internet,
         "monthname": monthname,
@@ -88,5 +117,22 @@ def payroll(request):
         "reimbursement": reimbursement,
         "leaves": leaves,
         "working": working,
+        "leavededuction": leavededuction,
+        "protax": protax,
+        "inctax": inctax,
+        "pfdeduc": pfdeduc,
+        "otherdeduc": otherdeduc,
+        "totalearning": totalearning,
+        "totaldeduction": totaldeduction,
+        "netpay": netpay,
+        "netpay_in_words": netpay_in_words,
     }
     return render(request, "payroll.html", context)
+
+
+def convert_to_words(number):
+    integer_part_words = num2words(int(number))
+    decimal_part = int((number % 1) * 100)
+    decimal_part_words = num2words(decimal_part)
+    result = f"{integer_part_words} point {decimal_part_words}"
+    return result

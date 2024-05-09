@@ -8,11 +8,10 @@ class Databaseadmin(ExportActionMixin, admin.ModelAdmin):
     list_display = [
         "name",
         "id",
-        "dept",
         "salary",
-        "designation",
         "gender",
         "pan_no",
+        "design",
         "aadhar_no",
         "dateofbirth",
         "dateofjoining",

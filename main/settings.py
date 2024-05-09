@@ -13,12 +13,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2!lek2o+i-n4oh*ttm53kkjslpkb4s40zd5$fl*!=$d!a*txuk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1", "*"]
 
 
-WSGI_APPLICATION = "vercel_app.wsgi.app"
 # Application definition
 
 INSTALLED_APPS = [
@@ -69,7 +68,7 @@ ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "Payroll_main",
+        "NAME": "Payroll_Final",
         "USER": "Accounts_owner",
         "PASSWORD": "sCTKYyM39GnI",
         "HOST": "ep-rapid-cloud-a1b5r0u0.ap-southeast-1.aws.neon.tech",
@@ -120,8 +119,10 @@ USE_TZ = True
 MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / "media"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

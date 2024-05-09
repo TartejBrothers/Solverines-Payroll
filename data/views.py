@@ -38,6 +38,7 @@ def payroll(request):
     inctax = request.GET.get("inctax")
     pfdeduc = request.GET.get("pfdeduc")
     otherdeduc = request.GET.get("otherdeduc")
+    medicalins = request.GET.get("medicalins")
     print(month)
     month = int(month)
     monthname = None
@@ -91,6 +92,7 @@ def payroll(request):
         + float(internet)
         + float(conveyance)
         + float(reimbursement)
+        + float(medicalins)
     )
     totaldeduction = (
         float(leavededuction)
@@ -126,6 +128,7 @@ def payroll(request):
         "totaldeduction": totaldeduction,
         "netpay": netpay,
         "netpay_in_words": netpay_in_words,
+        "medicalins": medicalins,
     }
     return render(request, "payroll.html", context)
 

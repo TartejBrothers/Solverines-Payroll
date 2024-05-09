@@ -9,9 +9,8 @@ class add_data(ModelForm):
         fields = [
             "name",
             "id",
-            "dept",
+            "design",
             "salary",
-            "designation",
             "gender",
             "pan_no",
             "aadhar_no",
@@ -24,14 +23,8 @@ class add_data(ModelForm):
         widgets = {
             "name": TextInput(attrs={"class": "form-control", "placeholder": "Name"}),
             "id": TextInput(attrs={"class": "form-control", "placeholder": "ID"}),
-            "dept": TextInput(
-                attrs={"class": "form-control", "placeholder": "Department"}
-            ),
             "salary": NumberInput(
-                attrs={"class": "form-control", "placeholder": "Salary"}
-            ),
-            "designation": TextInput(
-                attrs={"class": "form-control", "placeholder": "Designation"}
+                attrs={"class": "form-control", "placeholder": "CTC"}
             ),
             "gender": TextInput(
                 attrs={"class": "form-control", "placeholder": "Gender"}
@@ -43,13 +36,16 @@ class add_data(ModelForm):
                 attrs={"class": "form-control", "placeholder": "Aadhar Number"}
             ),
             "dateofbirth": TextInput(
-                attrs={"class": "form-control", "placeholder": "Date Of Birth"}
+                attrs={"class": "form-control", "placeholder": "Date of Birth"}
             ),
             "dateofjoining": TextInput(
-                attrs={"class": "form-control", "placeholder": "Date Of Joining"}
+                attrs={"class": "form-control", "placeholder": "Date of Joining"}
             ),
             "bankname": TextInput(
                 attrs={"class": "form-control", "placeholder": "Bank Name"}
+            ),
+            "design": TextInput(
+                attrs={"class": "form-control", "placeholder": "Desgination"}
             ),
             "ac_no": NumberInput(
                 attrs={"class": "form-control", "placeholder": "Account Number"}
@@ -59,9 +55,11 @@ class add_data(ModelForm):
             ),
         }
         labels = {
-            "dateofbirth": "Date Of Birth",
-            "dateofjoining": "Date Of Joining",
+            "dateofbirth": "Date of Birth",
+            "dateofjoining": "Date of Joining",
             "bankname": "Bank Name",
             "ac_no": "Account Number",
             "uan_no": "UAN Number",
+            "salary": "CTC",
+            "design": "Designation",
         }

@@ -5,9 +5,9 @@ from django.db import models
 class Database(models.Model):
     name = models.TextField()
     id = models.TextField(primary_key=True)
-    dept = models.TextField()
+
     salary = models.IntegerField()
-    designation = models.TextField()
+    design = models.TextField()
     gender = models.TextField()
     pan_no = models.CharField(max_length=20)
     aadhar_no = models.BigIntegerField()

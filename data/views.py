@@ -85,14 +85,14 @@ def payroll(request):
     totalearning = (
         float(basic)
         + float(hra)
-        + float(pf)
+        # + float(pf)
         + float(medical)
         + float(leaveallowance)
         + float(mobile)
         + float(internet)
         + float(conveyance)
         + float(reimbursement)
-        + float(medicalins)
+        # + float(medicalins)
     )
     totaldeduction = (
         float(leavededuction)
@@ -101,7 +101,9 @@ def payroll(request):
         + float(pfdeduc)
         + float(otherdeduc)
     )
-    netpay = round(totalearning - totaldeduction, 2)
+    totaldeduction = round(totaldeduction)
+    totalearning = round(totalearning)
+    netpay = round(totalearning - totaldeduction)
     netpay_in_words = convert_to_words(netpay).title()
 
     context = {
@@ -137,5 +139,5 @@ def convert_to_words(number):
     integer_part_words = num2words(int(number))
     decimal_part = int((number % 1) * 100)
     decimal_part_words = num2words(decimal_part)
-    result = f"{integer_part_words} point {decimal_part_words}"
+    result = f"{integer_part_words}"
     return result

@@ -85,14 +85,12 @@ def payroll(request):
     totalearning = (
         float(basic)
         + float(hra)
-        # + float(pf)
         + float(medical)
         + float(leaveallowance)
         + float(mobile)
         + float(internet)
         + float(conveyance)
         + float(reimbursement)
-        # + float(medicalins)
     )
     totaldeduction = (
         float(leavededuction)
@@ -101,11 +99,11 @@ def payroll(request):
         + float(pfdeduc)
         + float(otherdeduc)
     )
-    totaldeduction = round(totaldeduction)
-    totalearning = round(totalearning)
-    netpay = round(totalearning - totaldeduction)
-    netpay_in_words = convert_to_words(netpay).title()
 
+    netpay = totalearning - totaldeduction
+    netpay_in_words = num2words(netpay).title()
+    totalearning = f"{totalearning:.2f}"
+    totaldeduction = f"{totaldeduction:.2f}"
     context = {
         "employee": employee,
         "basic": basic,

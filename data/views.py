@@ -25,6 +25,7 @@ def payroll(request):
     hra = request.GET.get("hra")
     pf = request.GET.get("pf")
     leave = request.GET.get("leave")
+    year = request.GET.get("year")
     medical = request.GET.get("medical")
     leaveallowance = request.GET.get("leaveallowance")
     mobile = request.GET.get("mobile")
@@ -101,6 +102,7 @@ def payroll(request):
     )
 
     netpay = totalearning - totaldeduction
+    netpay = round(netpay)
     netpay_in_words = num2words(netpay).title()
     totalearning = f"{totalearning:.2f}"
     totaldeduction = f"{totaldeduction:.2f}"
@@ -129,6 +131,7 @@ def payroll(request):
         "netpay": netpay,
         "netpay_in_words": netpay_in_words,
         "medicalins": medicalins,
+        "year": year,
     }
     return render(request, "payroll.html", context)
 

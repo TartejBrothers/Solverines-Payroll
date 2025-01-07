@@ -5,7 +5,6 @@ from django.db import models
 class Database(models.Model):
     name = models.TextField()
     id = models.TextField(primary_key=True)
-
     salary = models.IntegerField()
     design = models.TextField()
     gender = models.TextField()

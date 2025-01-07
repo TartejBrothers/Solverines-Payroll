@@ -103,7 +103,7 @@ def payroll(request):
 
     netpay = totalearning - totaldeduction
     netpay = round(netpay)
-    netpay_in_words = num2words(netpay).title()
+    netpay_in_words = num2words(netpay, lang="en_IN").title()
     totalearning = f"{totalearning:.2f}"
     totaldeduction = f"{totaldeduction:.2f}"
     context = {

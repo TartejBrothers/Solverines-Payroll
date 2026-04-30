@@ -16,19 +16,24 @@
   <body>
     <div class="main" id="main">
       <div class="payrollheader">
-        <div class="headercenter">
-          <h3>Salary Payslip</h3>
-          <p>Pay Period - {{ monthname }} {{year}}</p>
-          <p><b>{{ employee.name }}</b></p>
-        </div>
         <div class="headerright">
           <img src="{% static 'assets/logo.png' %}" alt="Logo" />
+        </div>
+        <div class="headercenter">
+          <h4>SOLVERINES TECHNOLOGY SOLUTIONS PRIVATE LIMITED</h4>
+          <h5>
+            S-16, 3rd Floor, Siddharth, 15th Main Road, ThiruViKa / SIDCO
+            Industrial Estate, Guindy, Chennai 600032, Tamil Nadu, India
+          </h5>
+          <h3>Salary Payslip</h3>
+          <p>Pay Period - {{ monthname }} {{year}}</p>
         </div>
       </div>
       <div class="topbodycontent">
         <div class="topbodycontentleft toppadding">
           <ul>
             <li>
+              <p><b>Employee Name</b> : {{ employee.name }}</p>
               <p><b>Employee ID</b> : {{ employee.id }}</p>
               <p><b>Designation</b> : {{ employee.design }}</p>
               <p><b>Gender</b> : {{ employee.gender }}</p>
@@ -148,15 +153,6 @@
       </div>
       <div class="topbodyheader">
         <p>In Words - {{ netpay_in_words }}</p>
-      </div>
-      <div class="topbodyheader">
-        <p>
-          S-16, 3rd Floor, Siddharth, 15th Main Road, ThiruViKa / SIDCO
-          Industrial Estate, Guindy, Chennai 600032, Tamil Nadu, India
-        </p>
-      </div>
-      <div class="topbodyheader">
-        <h4>SOLVERINES TECHNOLOGY SOLUTIONS PRIVATE LIMITED</h4>
       </div>
     </div>
     <button class="printbutton">Print Payslip</button>

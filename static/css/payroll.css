@@ -35,10 +35,10 @@ body {
 
 .headerright {
   width: 30%;
-  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
   align-items: center;
   display: flex;
-  padding-inline: 10px;
+  padding: 10px;
   justify-content: center;
   text-align: center;
   flex-direction: column;
@@ -130,10 +130,14 @@ p b {
   border-bottom: 1px solid #000000;
   width: 100%;
 }
-.topbodyheader h4 {
+.headercenter h4 {
   color: #742894;
-  margin: 5px 0px;
+
   font-size: 20px;
+}
+.headercenter h5 {
+  color: #606060;
+  font-size: 12px;
 }
 
 .topbodyheaderleft,

@@ -30,6 +30,7 @@ def payroll(request):
     leaveallowance = request.GET.get("leaveallowance")
     mobile = request.GET.get("mobile")
     internet = request.GET.get("internet")
+    special = request.GET.get("special")
     conveyance = request.GET.get("conveyance")
     leaves = request.GET.get("leaves")
     working = request.GET.get("working")
@@ -73,8 +74,6 @@ def payroll(request):
     if query:
         employee = Database.objects.get(id=query)
     salary = employee.salary
-    print(salary)
-    print(employee)
     # basic = salary * 0.3
     # hra = basic * 0.6
     # pf = basic * 0.12
@@ -83,15 +82,21 @@ def payroll(request):
     # mobile = 4000
     # internet = 2000
     # conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
+    grosssalary = float(basic) + float(hra) + float(special)
+    if grosssalary > 21000:
+        esi = 0
+    else:
+        esi = grosssalary * 0.0075
     totalearning = (
         float(basic)
         + float(hra)
-        + float(medical)
-        + float(leaveallowance)
-        + float(mobile)
-        + float(internet)
-        + float(conveyance)
+        # + float(medical)
+        # + float(leaveallowance)
+        # + float(mobile)
+        # + float(internet)
+        # + float(conveyance)
         + float(reimbursement)
+        + float(special)
     )
     totaldeduction = (
         float(leavededuction)
@@ -99,6 +104,7 @@ def payroll(request):
         + float(inctax)
         + float(pfdeduc)
         + float(otherdeduc)
+        + float(esi)
     )
 
     netpay = totalearning - totaldeduction
@@ -106,6 +112,7 @@ def payroll(request):
     netpay_in_words = num2words(netpay, lang="en_IN").title()
     totalearning = f"{totalearning:.2f}"
     totaldeduction = f"{totaldeduction:.2f}"
+    esi = f"{esi:.2f}"
     context = {
         "employee": employee,
         "basic": basic,
@@ -118,6 +125,7 @@ def payroll(request):
         "internet": internet,
         "monthname": monthname,
         "conveyance": conveyance,
+        "special": special,
         "reimbursement": reimbursement,
         "leaves": leaves,
         "working": working,
@@ -132,6 +140,7 @@ def payroll(request):
         "netpay_in_words": netpay_in_words,
         "medicalins": medicalins,
         "year": year,
+        "esi": esi,
     }
     return render(request, "payroll.html", context)
 

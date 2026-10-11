@@ -100,19 +100,12 @@
                 <p>{{ special }}</p>
               </li>
 
+              {% if reimbursement != "0.00" %}
               <li>
                 <p>Reimbursement</p>
                 <p>{{ reimbursement }}</p>
               </li>
-
-              <!-- <li>
-                <p>PF (Employer Contribution)</p>
-                <p>{{ pf }}</p>
-              </li>
-              <li>
-                <p>Medical Insurance</p>
-                <p>{{ medicalins }}</p>
-              </li> -->
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -133,12 +126,21 @@
               </li>
               <li>
                 <p>PF (Employee Contribution)</p>
-                <p>{{ pfdeduc }}</p>
+                <p>{{ pf_employee }}</p>
               </li>
+
+              {% if esi_employee != "0.00" %}
               <li>
-                <p>ESI</p>
-                <p>{{ esi }}</p>
+                <p>ESI (Employee Contribution)</p>
+                <p>{{ esi_employee }}</p>
               </li>
+              {% endif %} {% if esi_employer != "0.00" %}
+              <li>
+                <p>ESI (Employer Contribution)</p>
+                <p>{{ esi_employer }}</p>
+              </li>
+              {% endif %}
+
               <li>
                 <p>Others</p>
                 <p>{{ otherdeduc }}</p>
@@ -148,10 +150,23 @@
         </div>
       </div>
       <div class="topbodyheader">
+        {% if gross == totalearning %}
         <div class="topbodyheaderleft">
           <p>Total Gross Pay</p>
-          <p>{{ totalearning }}</p>
+          <p>{{ gross }}</p>
         </div>
+        {% else %}
+        <div class="topbodyheaderleft payrollbottomvalues">
+          <div>
+            <p>Gross Pay</p>
+            <p>{{ gross}}</p>
+          </div>
+          <div>
+            <p>Total Income</p>
+            <p>{{ totalearning }}</p>
+          </div>
+        </div>
+        {% endif %}
         <div class="topbodyheaderright">
           <p>Total Deductions</p>
           <p>{{ totaldeduction }}</p>

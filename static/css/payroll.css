@@ -148,6 +148,23 @@ p b {
 
   flex-direction: row;
 }
+.payrollbottomvalues {
+  display: flex;
+  gap: 0px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+}
+.payrollbottomvalues div {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.payrollbottomvalues > :first-child {
+  border-bottom: 1px solid #000;
+}
 @media print {
   @page {
     size: landscape;

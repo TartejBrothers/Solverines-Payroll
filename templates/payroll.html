@@ -133,12 +133,21 @@
               </li>
               <li>
                 <p>PF (Employee Contribution)</p>
-                <p>{{ pfdeduc }}</p>
+                <p>{{ pf_employee }}</p>
               </li>
+
+              {% if esi_employee != "0.00" %}
               <li>
-                <p>ESI</p>
-                <p>{{ esi }}</p>
+                <p>ESI (Employee Contribution)</p>
+                <p>{{ esi_employee }}</p>
               </li>
+              {% endif %} {% if esi_employer != "0.00" %}
+              <li>
+                <p>ESI (Employer Contribution)</p>
+                <p>{{ esi_employer }}</p>
+              </li>
+              {% endif %}
+
               <li>
                 <p>Others</p>
                 <p>{{ otherdeduc }}</p>

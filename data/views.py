@@ -1,153 +1,218 @@
-from django.shortcuts import render, redirect
+from decimal import Decimal, InvalidOperation
+
+from django.http import HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, redirect, render
+from num2words import num2words
+
 from .forms import add_data
 from .models import Database
-from num2words import num2words
+
+MONTH_NAMES = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December",
+}
+
+ZERO = Decimal("0")
+
+
+def money(value):
+    """Format a Decimal as a two-decimal string for number inputs."""
+    return f"{value:.2f}"
+
+
+def payroll_defaults(employee):
+    """Calculate suggested monthly values, or return blanks if CTC is missing."""
+    fields = (
+        "monthly_ctc",
+        "basic",
+        "hra",
+        "special",
+        "pf_employee",
+        "pf_employer",
+        "medical_insurance",
+        "esi_employee",
+        "esi_employer",
+        "gross",
+    )
+
+    if employee.ctc is None or employee.ctc == "":
+        return {field: "" for field in fields}
+
+    monthly_ctc = Decimal(str(employee.ctc)) / Decimal("12")
+    basic = monthly_ctc * Decimal("0.40")
+    hra = basic * Decimal("0.50")
+
+    # Keep the rest of your current calculation here.
+    # This follows your current code, where PF base is temporarily set to Basic.
+    pf_base = basic
+    medical_insurance = Decimal("677.00")
+
+    pf_employee = Decimal("3000") if pf_base > 25000 else pf_base * Decimal("0.12")
+    pf_employer = Decimal("3250") if pf_base > 25000 else pf_base * Decimal("0.13")
+
+    special = monthly_ctc - basic - hra - pf_employee - pf_employer - medical_insurance
+    gross = basic + hra + special
+
+    esi_employee = ZERO if gross > 21000 else gross * Decimal("0.0075")
+    esi_employer = ZERO if gross > 21000 else gross * Decimal("0.0325")
+
+    special -= esi_employee + esi_employer
+    gross = basic + hra + special
+
+    return {
+        "monthly_ctc": money(monthly_ctc),
+        "basic": money(basic),
+        "hra": money(hra),
+        "special": money(special),
+        "pf_employee": money(pf_employee),
+        "pf_employer": money(pf_employer),
+        "medical_insurance": money(medical_insurance),
+        "esi_employee": money(esi_employee),
+        "esi_employer": money(esi_employer),
+        "gross": money(gross),
+    }
 
 
 def home(request):
     form = add_data(request.POST or None)
     if form.is_valid():
         form.save()
-        form = add_data()
         return redirect("search")
-    context = {"form": form}
-    return render(request, "index.html", context)
+    return render(request, "index.html", {"form": form})
 
 
 def search(request):
-    return render(request, "search.html")
+    employee_id = request.GET.get("query", "").strip()
+
+    # Save the CTC submitted from the search page.
+    if request.method == "POST":
+        employee_id = request.POST.get("query", "").strip()
+        employee = get_object_or_404(Database, id=employee_id)
+
+        try:
+            ctc = Decimal(request.POST.get("ctc", "").strip())
+            if ctc < 0:
+                raise InvalidOperation
+        except (InvalidOperation, TypeError, AttributeError):
+            return HttpResponseBadRequest("Enter a valid, non-negative CTC.")
+
+        employee.ctc = ctc
+        employee.save(update_fields=["ctc"])
+
+        return redirect(f"/search/?query={employee.id}")
+
+    employee = None
+    defaults = {
+        "medical_insurance": "677.00",
+    }
+
+    if employee_id:
+        employee = get_object_or_404(Database, id=employee_id)
+        defaults = payroll_defaults(employee)
+
+    return render(
+        request,
+        "search.html",
+        {
+            "employee": employee,
+            "defaults": defaults,
+            "query": employee_id,
+        },
+    )
 
 
 def payroll(request):
-    query = request.GET.get("query")
-    month = request.GET.get("month")
-    basic = request.GET.get("basic")
-    hra = request.GET.get("hra")
-    pf = request.GET.get("pf")
-    leave = request.GET.get("leave")
-    year = request.GET.get("year")
-    medical = request.GET.get("medical")
-    leaveallowance = request.GET.get("leaveallowance")
-    mobile = request.GET.get("mobile")
-    internet = request.GET.get("internet")
-    special = request.GET.get("special")
-    conveyance = request.GET.get("conveyance")
-    leaves = request.GET.get("leaves")
-    working = request.GET.get("working")
-    reimbursement = request.GET.get("reimbursement")
-    leavededuction = request.GET.get("leavededuction")
-    protax = request.GET.get("protax")
-    inctax = request.GET.get("inctax")
-    pfdeduc = request.GET.get("pfdeduc")
-    otherdeduc = request.GET.get("otherdeduc")
-    medicalins = request.GET.get("medicalins")
-    print(month)
-    month = int(month)
-    monthname = None
-    if month == 1:
-        monthname = "January"
-    elif month == 2:
-        monthname = "February"
-    elif month == 3:
-        monthname = "March"
-    elif month == 4:
-        monthname = "April"
-    elif month == 5:
-        monthname = "May"
-    elif month == 6:
-        monthname = "June"
-    elif month == 7:
-        monthname = "July"
-    elif month == 8:
-        monthname = "August"
-    elif month == 9:
-        monthname = "September"
-    elif month == 10:
-        monthname = "October"
-    elif month == 11:
-        monthname = "November"
-    elif month == 12:
-        monthname = "December"
+    employee_id = request.GET.get("query", "").strip()
+    if not employee_id:
+        return HttpResponseBadRequest("An employee ID is required.")
 
-    results = Database.objects.all()
+    employee = get_object_or_404(Database, id=employee_id)
 
-    if query:
-        employee = Database.objects.get(id=query)
-    salary = employee.salary
-    # basic = salary * 0.3
-    # hra = basic * 0.6
-    # pf = basic * 0.12
-    # leave = 3333
-    # medical = 8333
-    # mobile = 4000
-    # internet = 2000
-    # conveyance = salary - basic - hra - pf - leave - medical - mobile - internet
-    grosssalary = float(basic) + float(hra) + float(special)
-    if grosssalary > 21000:
-        esi = 0
-    else:
-        esi = grosssalary * 0.0075
-    totalearning = (
-        float(basic)
-        + float(hra)
-        # + float(medical)
-        # + float(leaveallowance)
-        # + float(mobile)
-        # + float(internet)
-        # + float(conveyance)
-        + float(reimbursement)
-        + float(special)
+    try:
+        month = int(request.GET.get("month", ""))
+        monthname = MONTH_NAMES[month]
+    except (TypeError, ValueError, KeyError):
+        return HttpResponseBadRequest("Month must be a number from 1 to 12.")
+
+    amount_fields = [
+        "basic",
+        "hra",
+        "special",
+        "reimbursement",
+        "leavededuction",
+        "protax",
+        "inctax",
+        "pf_employee",
+        "pf_employer",
+        "medical_insurance",
+        "esi_employee",
+        "esi_employer",
+        "volunteer_pf",
+    ]
+
+    amounts = {}
+    try:
+        for field in amount_fields:
+            value = request.GET.get(field, "").strip()
+            amounts[field] = Decimal(value) if value else ZERO
+    except (InvalidOperation, AttributeError):
+        return HttpResponseBadRequest("Payroll amounts must be valid numbers.")
+
+    # Employee PF and ESI are direct deductions.
+    pf_employee = amounts["pf_employee"]
+    esi_employee = amounts["esi_employee"]
+
+    # Include volunteer PF, employer PF, and medical insurance under "Others".
+    otherdeduc = (
+        amounts["volunteer_pf"] + amounts["pf_employer"] + amounts["medical_insurance"]
     )
+
+    gross = amounts["basic"] + amounts["hra"] + amounts["special"]
+    totalearning = gross + amounts["reimbursement"]
+
     totaldeduction = (
-        float(leavededuction)
-        + float(protax)
-        + float(inctax)
-        + float(pfdeduc)
-        + float(otherdeduc)
-        + float(esi)
+        amounts["leavededuction"]
+        + amounts["protax"]
+        + amounts["inctax"]
+        + pf_employee
+        + esi_employee
+        + otherdeduc
     )
 
-    netpay = totalearning - totaldeduction
-    netpay = round(netpay)
+    netpay = round(totalearning - totaldeduction)
     netpay_in_words = num2words(netpay, lang="en_IN").title()
-    totalearning = f"{totalearning:.2f}"
-    totaldeduction = f"{totaldeduction:.2f}"
-    esi = f"{esi:.2f}"
+
     context = {
         "employee": employee,
-        "basic": basic,
-        "hra": hra,
-        "pf": pf,
-        "leave": leave,
-        "medical": medical,
-        "leaveallowance": leaveallowance,
-        "mobile": mobile,
-        "internet": internet,
         "monthname": monthname,
-        "conveyance": conveyance,
-        "special": special,
-        "reimbursement": reimbursement,
-        "leaves": leaves,
-        "working": working,
-        "leavededuction": leavededuction,
-        "protax": protax,
-        "inctax": inctax,
-        "pfdeduc": pfdeduc,
-        "otherdeduc": otherdeduc,
-        "totalearning": totalearning,
-        "totaldeduction": totaldeduction,
+        "year": request.GET.get("year"),
+        "leaves": request.GET.get("leaves"),
+        "working": request.GET.get("working"),
+        "gross": money(gross),
+        "pf_employee": money(pf_employee),
+        "esi_employee": money(esi_employee),
+        "esi_employer": money(amounts["esi_employer"]),
+        "pf_employer": money(amounts["pf_employer"]),
+        "medical_insurance": money(amounts["medical_insurance"]),
+        "volunteer_pf": money(amounts["volunteer_pf"]),
+        "otherdeduc": money(otherdeduc),
+        "totalearning": money(totalearning),
+        "totaldeduction": money(totaldeduction),
         "netpay": netpay,
         "netpay_in_words": netpay_in_words,
-        "medicalins": medicalins,
-        "year": year,
-        "esi": esi,
     }
+
+    # Also pass the submitted amount fields to the template.
+    context.update({key: money(value) for key, value in amounts.items()})
+
     return render(request, "payroll.html", context)
-
-
-def convert_to_words(number):
-    integer_part_words = num2words(int(number))
-    decimal_part = int((number % 1) * 100)
-    decimal_part_words = num2words(decimal_part)
-    result = f"{integer_part_words}"
-    return result

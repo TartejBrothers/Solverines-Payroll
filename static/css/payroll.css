@@ -165,6 +165,12 @@ p b {
 .payrollbottomvalues > :first-child {
   border-bottom: 1px solid #000;
 }
+.payrollbottomtext {
+  font-size: 12px;
+  color: #606060;
+  text-align: center;
+  margin-top: 10px;
+}
 @media print {
   @page {
     size: landscape;

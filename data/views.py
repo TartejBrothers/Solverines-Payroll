@@ -31,7 +31,27 @@ def money(value):
 
 
 def payroll_defaults(employee):
-    """Calculate suggested monthly values, or return blanks if CTC is missing."""
+    """
+    Calculate monthly payroll defaults from yearly CTC.
+
+    Calculation notes:
+    - Monthly CTC = yearly CTC / 12
+    - Basic = 40% of Monthly CTC
+    - HRA = 50% of Basic
+    - PF base = MIN(25000, MAX(0, (Monthly CTC - HRA - Medical) / 1.25))
+    - Employee PF = 12% of PF base
+    - Employer PF = 13% of PF base
+      (the PF base cap makes these max out at 3000 and 3250)
+    - Special = Monthly CTC - Basic - HRA - PF employee - Medical
+                - ESI employee - ESI employer - PF employer
+    - Gross = Basic + HRA + Special
+    - If Gross <= 21000: employee ESI = 0.75% of Gross,
+                         employer ESI = 3.25% of Gross
+      Otherwise, both ESI amounts are zero.
+    """
+
+    medical_insurance = Decimal("677.00")
+
     fields = (
         "monthly_ctc",
         "basic",
@@ -46,27 +66,53 @@ def payroll_defaults(employee):
     )
 
     if employee.ctc is None or employee.ctc == "":
-        return {field: "" for field in fields}
+        return {
+            **{field: "" for field in fields},
+            "medical_insurance": money(medical_insurance),
+        }
 
     monthly_ctc = Decimal(str(employee.ctc)) / Decimal("12")
     basic = monthly_ctc * Decimal("0.40")
     hra = basic * Decimal("0.50")
 
-    # Keep the rest of your current calculation here.
-    # This follows your current code, where PF base is temporarily set to Basic.
-    pf_base = basic
-    medical_insurance = Decimal("677.00")
+    # Excel PF base: (Monthly CTC - HRA - Medical) / (1 + 12% + 13%),
+    # bounded between 0 and 25,000.
+    pf_base = (monthly_ctc - hra - medical_insurance) / Decimal("1.25")
+    pf_base = min(Decimal("25000"), max(ZERO, pf_base))
 
-    pf_employee = Decimal("3000") if pf_base > 25000 else pf_base * Decimal("0.12")
-    pf_employer = Decimal("3250") if pf_base > 25000 else pf_base * Decimal("0.13")
+    pf_employee = pf_base * Decimal("0.12")
+    pf_employer = pf_base * Decimal("0.13")
 
-    special = monthly_ctc - basic - hra - pf_employee - pf_employer - medical_insurance
-    gross = basic + hra + special
+    # Gross before ESI contributions are deducted from Special Allowance.
+    gross_before_esi = monthly_ctc - pf_employee - pf_employer - medical_insurance
 
-    esi_employee = ZERO if gross > 21000 else gross * Decimal("0.0075")
-    esi_employer = ZERO if gross > 21000 else gross * Decimal("0.0325")
+    # If ESI applies, subtracting both ESI contributions makes final gross
+    # equal to gross_before_esi / 1.04. Use that final gross for the threshold.
+    gross_with_esi = gross_before_esi / Decimal("1.04")
 
-    special -= esi_employee + esi_employer
+    if gross_with_esi <= Decimal("21000"):
+        gross = gross_with_esi
+        esi_employee = gross * Decimal("0.0075")
+        esi_employer = gross * Decimal("0.0325")
+    else:
+        gross = gross_before_esi
+        esi_employee = ZERO
+        esi_employer = ZERO
+
+    # Special = Monthly CTC - Basic - HRA - PF employee - Medical
+    #           - ESI employee - ESI employer - PF employer.
+    special = (
+        monthly_ctc
+        - basic
+        - hra
+        - pf_employee
+        - medical_insurance
+        - esi_employee
+        - esi_employer
+        - pf_employer
+    )
+
+    # Gross Pay = Basic + HRA + Special.
     gross = basic + hra + special
 
     return {
@@ -184,6 +230,7 @@ def payroll(request):
         amounts["leavededuction"]
         + amounts["protax"]
         + amounts["inctax"]
+        + amounts["esi_employer"]
         + pf_employee
         + esi_employee
         + otherdeduc

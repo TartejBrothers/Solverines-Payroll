@@ -10,7 +10,7 @@ class add_data(ModelForm):
             "name",
             "id",
             "design",
-            "salary",
+            "ctc",
             "gender",
             "pan_no",
             "aadhar_no",
@@ -23,9 +23,7 @@ class add_data(ModelForm):
         widgets = {
             "name": TextInput(attrs={"class": "form-control", "placeholder": "Name"}),
             "id": TextInput(attrs={"class": "form-control", "placeholder": "ID"}),
-            "salary": NumberInput(
-                attrs={"class": "form-control", "placeholder": "CTC"}
-            ),
+            "ctc": NumberInput(attrs={"class": "form-control", "placeholder": "CTC"}),
             "gender": TextInput(
                 attrs={"class": "form-control", "placeholder": "Gender"}
             ),
@@ -60,6 +58,6 @@ class add_data(ModelForm):
             "bankname": "Bank Name",
             "ac_no": "Account Number",
             "uan_no": "UAN Number",
-            "salary": "CTC",
+            "ctc": "CTC",
             "design": "Designation",
         }

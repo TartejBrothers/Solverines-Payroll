@@ -37,7 +37,7 @@
         />
         <button type="submit">Load Salary</button>
       </form>
-      {% if employee.ctc == None %}
+      {% if employee %} {% if employee.ctc == None %}
       <form method="post" action="{% url 'search' %}" class="searchform">
         {% csrf_token %}
         <input type="hidden" name="query" value="{{ employee.id }}" />
@@ -201,7 +201,7 @@
 
         <button type="submit">Generate Payroll</button>
       </form>
-      {% endif %}
+      {% endif %} {% endif %}
     </div>
   </body>
 </html>

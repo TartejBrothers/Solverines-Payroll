@@ -8,7 +8,7 @@ class Databaseadmin(ExportActionMixin, admin.ModelAdmin):
     list_display = [
         "name",
         "id",
-        "salary",
+        "ctc",
         "gender",
         "pan_no",
         "design",

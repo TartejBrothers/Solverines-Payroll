@@ -235,8 +235,8 @@ def payroll(request):
         + esi_employee
         + otherdeduc
     )
-
-    netpay = round(totalearning - totaldeduction)
+    monthly_ctc = Decimal(str(employee.ctc or ZERO)) / Decimal("12")
+    netpay = round(monthly_ctc - totaldeduction + amounts["reimbursement"], 0)
     netpay_in_words = num2words(netpay, lang="en_IN").title()
 
     context = {

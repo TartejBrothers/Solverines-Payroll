@@ -136,15 +136,25 @@
               </li>
               {% endif %} {% if esi_employer != "0.00" %}
               <li>
-                <p>ESI (Employer Contribution)</p>
+                <p>ESI (Employer Contribution; used in gross calculation)</p>
                 <p>{{ esi_employer }}</p>
               </li>
               {% endif %}
 
               <li>
-                <p>Others</p>
-                <p>{{ otherdeduc }}</p>
+                <p>VPF</p>
+                <p>{{ volunteer_pf }}</p>
               </li>
+              <li>
+                <p>Medical Insurance</p>
+                <p>{{ medical_insurance }}</p>
+              </li>
+              {% if pf_employer != "0.00" %}
+              <li>
+                <p>PF (Employer Contribution; used in gross calculation)</p>
+                <p>{{ pf_employer }}</p>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>

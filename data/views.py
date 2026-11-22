@@ -34,20 +34,9 @@ def payroll_defaults(employee):
     """
     Calculate monthly payroll defaults from yearly CTC.
 
-    Calculation notes:
-    - Monthly CTC = yearly CTC / 12
-    - Basic = 40% of Monthly CTC
-    - HRA = 50% of Basic
-    - PF base = MIN(25000, MAX(0, (Monthly CTC - HRA - Medical) / 1.25))
-    - Employee PF = 12% of PF base
-    - Employer PF = 13% of PF base
-      (the PF base cap makes these max out at 3000 and 3250)
-    - Special = Monthly CTC - Basic - HRA - PF employee - Medical
-                - ESI employee - ESI employer - PF employer
-    - Gross = Basic + HRA + Special
-    - If Gross <= 21000: employee ESI = 0.75% of Gross,
-                         employer ESI = 3.25% of Gross
-      Otherwise, both ESI amounts are zero.
+    Salary components are based on monthly CTC. ESI eligibility and employer
+    ESI are solved algebraically so eligibility never creates a circular
+    reference. User-entered values on the search form remain editable.
     """
 
     medical_insurance = Decimal("677.00")
@@ -72,48 +61,32 @@ def payroll_defaults(employee):
         }
 
     monthly_ctc = Decimal(str(employee.ctc)) / Decimal("12")
-    basic = monthly_ctc * Decimal("0.40")
+    basic = monthly_ctc * Decimal("0.50")
     hra = basic * Decimal("0.50")
 
-    # Excel PF base: (Monthly CTC - HRA - Medical) / (1 + 12% + 13%),
-    # bounded between 0 and 25,000.
-    pf_base = (monthly_ctc - hra - medical_insurance) / Decimal("1.25")
+    # PF is calculated on Basic, subject to the configured base ceiling.
+    # Medical insurance is outside CTC and does not affect this base.
+    pf_base = basic
     pf_base = min(Decimal("25000"), max(ZERO, pf_base))
 
     pf_employee = pf_base * Decimal("0.12")
     pf_employer = pf_base * Decimal("0.13")
 
-    # Gross before ESI contributions are deducted from Special Allowance.
-    gross_before_esi = monthly_ctc - pf_employee - pf_employer - medical_insurance
-
-    # If ESI applies, subtracting both ESI contributions makes final gross
-    # equal to gross_before_esi / 1.04. Use that final gross for the threshold.
-    gross_with_esi = gross_before_esi / Decimal("1.04")
+    # Gross = monthly CTC - employer PF - employer ESI. Solve the eligible
+    # case as G = (CTC - employer PF) / (1 + employer ESI rate).
+    gross_without_esi = monthly_ctc - pf_employer
+    gross_with_esi = gross_without_esi / Decimal("1.0325")
 
     if gross_with_esi <= Decimal("21000"):
-        gross = gross_with_esi
+        esi_employer = gross_with_esi * Decimal("0.0325")
+        gross = monthly_ctc - pf_employer - esi_employer
         esi_employee = gross * Decimal("0.0075")
-        esi_employer = gross * Decimal("0.0325")
     else:
-        gross = gross_before_esi
+        gross = gross_without_esi
         esi_employee = ZERO
         esi_employer = ZERO
 
-    # Special = Monthly CTC - Basic - HRA - PF employee - Medical
-    #           - ESI employee - ESI employer - PF employer.
-    special = (
-        monthly_ctc
-        - basic
-        - hra
-        - pf_employee
-        - medical_insurance
-        - esi_employee
-        - esi_employer
-        - pf_employer
-    )
-
-    # Gross Pay = Basic + HRA + Special.
-    gross = basic + hra + special
+    special = monthly_ctc - basic - hra
 
     return {
         "monthly_ctc": money(monthly_ctc),
@@ -214,29 +187,23 @@ def payroll(request):
     except (InvalidOperation, AttributeError):
         return HttpResponseBadRequest("Payroll amounts must be valid numbers.")
 
-    # Employee PF and ESI are direct deductions.
+    # Employee PF, ESI, VPF, and medical insurance are salary deductions.
     pf_employee = amounts["pf_employee"]
     esi_employee = amounts["esi_employee"]
-
-    # Include volunteer PF, employer PF, and medical insurance under "Others".
-    otherdeduc = (
-        amounts["volunteer_pf"] + amounts["pf_employer"] + amounts["medical_insurance"]
-    )
-
-    gross = amounts["basic"] + amounts["hra"] + amounts["special"]
+    monthly_ctc = Decimal(str(employee.ctc or ZERO)) / Decimal("12")
+    gross = monthly_ctc - amounts["pf_employer"] - amounts["esi_employer"]
+    otherdeduc = amounts["volunteer_pf"] + amounts["medical_insurance"]
     totalearning = gross + amounts["reimbursement"]
 
     totaldeduction = (
         amounts["leavededuction"]
         + amounts["protax"]
         + amounts["inctax"]
-        + amounts["esi_employer"]
         + pf_employee
         + esi_employee
         + otherdeduc
     )
-    monthly_ctc = Decimal(str(employee.ctc or ZERO)) / Decimal("12")
-    netpay = round(monthly_ctc - totaldeduction + amounts["reimbursement"], 0)
+    netpay = round(gross - totaldeduction + amounts["reimbursement"], 0)
     netpay_in_words = num2words(netpay, lang="en_IN").title()
 
     context = {
@@ -250,6 +217,7 @@ def payroll(request):
         "esi_employee": money(esi_employee),
         "esi_employer": money(amounts["esi_employer"]),
         "pf_employer": money(amounts["pf_employer"]),
+        "reimbursement": money(amounts["reimbursement"]),
         "medical_insurance": money(amounts["medical_insurance"]),
         "volunteer_pf": money(amounts["volunteer_pf"]),
         "otherdeduc": money(otherdeduc),

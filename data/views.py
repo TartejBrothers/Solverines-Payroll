@@ -192,6 +192,9 @@ def payroll(request):
     esi_employee = amounts["esi_employee"]
     monthly_ctc = Decimal(str(employee.ctc or ZERO)) / Decimal("12")
     gross = monthly_ctc - amounts["pf_employer"] - amounts["esi_employer"]
+    # Recalculate this from the final gross and entered Basic/HRA so the
+    # payslip always follows the salary-list formula, including edits.
+    special = gross - amounts["basic"] - amounts["hra"]
     otherdeduc = amounts["volunteer_pf"] + amounts["medical_insurance"]
     totalearning = gross + amounts["reimbursement"]
 
@@ -213,6 +216,7 @@ def payroll(request):
         "leaves": request.GET.get("leaves"),
         "working": request.GET.get("working"),
         "gross": money(gross),
+        "special": money(special),
         "pf_employee": money(pf_employee),
         "esi_employee": money(esi_employee),
         "esi_employer": money(amounts["esi_employer"]),
@@ -228,6 +232,6 @@ def payroll(request):
     }
 
     # Also pass the submitted amount fields to the template.
-    context.update({key: money(value) for key, value in amounts.items()})
+    context.update({key: money(value) for key, value in amounts.items() if key != "special"})
 
     return render(request, "payroll.html", context)
